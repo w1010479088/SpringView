@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.liaoinstan.demospring.R;
 import com.liaoinstan.springview.rotationheader.RotationFooter;
 import com.liaoinstan.springview.rotationheader.RotationHeader;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
 
 import java.util.ArrayList;
@@ -41,14 +42,14 @@ public class Demo2Activity extends AppCompatActivity {
         listView.setAdapter(listAdapter);
 
         springView = findViewById(R.id.springview);
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
         });

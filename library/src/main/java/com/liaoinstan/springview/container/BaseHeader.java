@@ -2,14 +2,14 @@ package com.liaoinstan.springview.container;
 
 import android.view.View;
 
-import com.liaoinstan.springview.widget.SpringView;
+import com.liaoinstan.springview.widget.DragHandler;
 
 /**
  * Created by liaoinstan on 2016/3/24.
  * 这个类为所有头部的虚基类，实现自定义的头部需继承自该类
  * 该类实现了SpringView.DragHander接口，为3个高度接口提供了默认的返回值
  */
-public abstract class BaseHeader implements SpringView.DragHander {
+public abstract class BaseHeader implements DragHandler {
 
     /**
      * 这个方法用于设置当前View的临界高度(limit hight)，即拉动到多少会被认定为刷新超作，而没到达该高度则不会执行刷新
@@ -61,7 +61,7 @@ public abstract class BaseHeader implements SpringView.DragHander {
      * 默认返回0
      */
     @Override
-    public int getEndingAnimHight(View rootView) {
+    public int getEndingAnimHeight(View rootView) {
         return 0;
     }
 

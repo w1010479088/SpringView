@@ -3,8 +3,6 @@ package com.liaoinstan.springview.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
-import androidx.annotation.Nullable;
-import com.google.android.material.appbar.AppBarLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -12,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.OverScroller;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.liaoinstan.springview.R;
 import com.liaoinstan.springview.listener.AppBarStateChangeListener;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by liaoinstan on 2016/3/11.
@@ -36,13 +37,6 @@ public class SpringView extends ViewGroup {
     private boolean isCallFresh = false;    //是否手动调用callFresh()进行刷新操作
 
     private int MOVE_TIME = 400;
-
-    //是否需要回调接口：TOP 只回调刷新、BOTTOM 只回调加载更多、BOTH 都需要、NONE 都不
-    public enum Give {
-        BOTH, TOP, BOTTOM, NONE
-    }
-
-    public enum Type {OVERLAP, FOLLOW, DRAG}
 
     private Give give = Give.BOTH;
     private Type type = Type.FOLLOW;
@@ -201,7 +195,7 @@ public class SpringView extends ViewGroup {
             //设置下拉弹动高度，只有在>0时才生效，否则默认和临界高度一致
             int sh = headerHander.getDragSpringHeight(header);
             HEADER_SPRING_HEIGHT = sh > 0 ? sh : HEADER_LIMIT_HEIGHT;
-            HEADER_ENDING_HEIGHT = headerHander.getEndingAnimHight(header);
+            HEADER_ENDING_HEIGHT = headerHander.getEndingAnimHeight(header);
         } else {
             //不是动态设置的头部，设置默认值
             if (header != null) HEADER_LIMIT_HEIGHT = header.getMeasuredHeight();
@@ -215,7 +209,7 @@ public class SpringView extends ViewGroup {
             FOOTER_LIMIT_HEIGHT = h > 0 ? h : footer.getMeasuredHeight();
             int sh = footerHander.getDragSpringHeight(footer);
             FOOTER_SPRING_HEIGHT = sh > 0 ? sh : FOOTER_LIMIT_HEIGHT;
-            FOOTER_ENDING_HEIGHT = footerHander.getEndingAnimHight(footer);
+            FOOTER_ENDING_HEIGHT = footerHander.getEndingAnimHeight(footer);
         } else {
             if (footer != null) FOOTER_LIMIT_HEIGHT = footer.getMeasuredHeight();
             FOOTER_SPRING_HEIGHT = FOOTER_LIMIT_HEIGHT;
@@ -492,7 +486,7 @@ public class SpringView extends ViewGroup {
         } else if (callFreshORload == 2) {
             if (footerHander != null) footerHander.onFinishAnim();
             if (give == Give.TOP || give == Give.NONE) {
-                listener.onLoadmore();
+                listener.onLoadMore();
             }
         }
         callFreshORload = 0;
@@ -520,13 +514,13 @@ public class SpringView extends ViewGroup {
         if (isTop()) {
             listener.onRefresh();
         } else if (isBottom()) {
-            listener.onLoadmore();
+            listener.onLoadMore();
         }
     }
 
     //在开始退场动画时会执行此方法
     private void callOnAfterEndingAnim() {
-        final DragHander dragHander = isTop() ? headerHander : footerHander;
+        final DragHandler dragHander = isTop() ? headerHander : footerHander;
         if (dragHander == null) return;
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -928,21 +922,6 @@ public class SpringView extends ViewGroup {
         return type;
     }
 
-    /**
-     * 回调接口
-     */
-    public interface OnFreshListener {
-        /**
-         * 下拉刷新，回调接口
-         */
-        void onRefresh();
-
-        /**
-         * 上拉加载，回调接口
-         */
-        void onLoadmore();
-    }
-
     public View getHeaderView() {
         return header;
     }
@@ -953,20 +932,20 @@ public class SpringView extends ViewGroup {
 
     private boolean needChangeHeader = false;
     private boolean needChangeFooter = false;
-    private DragHander _headerHander;
-    private DragHander _footerHander;
-    private DragHander headerHander;
-    private DragHander footerHander;
+    private DragHandler _headerHander;
+    private DragHandler _footerHander;
+    private DragHandler headerHander;
+    private DragHandler footerHander;
 
-    public DragHander getHeader() {
+    public DragHandler getHeader() {
         return headerHander;
     }
 
-    public DragHander getFooter() {
+    public DragHandler getFooter() {
         return footerHander;
     }
 
-    public void setHeader(DragHander headerHander) {
+    public void setHeader(DragHandler headerHander) {
         if (this.headerHander != null && isTop()) {
             needChangeHeader = true;
             _headerHander = headerHander;
@@ -976,7 +955,7 @@ public class SpringView extends ViewGroup {
         }
     }
 
-    private void setHeaderIn(DragHander headerHander) {
+    private void setHeaderIn(DragHandler headerHander) {
         this.headerHander = headerHander;
         if (header != null) {
             removeView(this.header);
@@ -987,7 +966,7 @@ public class SpringView extends ViewGroup {
         requestLayout();
     }
 
-    public void setFooter(DragHander footerHander) {
+    public void setFooter(DragHandler footerHander) {
         if (this.footerHander != null && isBottom()) {
             needChangeFooter = true;
             _footerHander = footerHander;
@@ -997,7 +976,7 @@ public class SpringView extends ViewGroup {
         }
     }
 
-    private void setFooterIn(DragHander footerHander) {
+    private void setFooterIn(DragHandler footerHander) {
         this.footerHander = footerHander;
         if (footer != null) {
             removeView(footer);
@@ -1007,65 +986,4 @@ public class SpringView extends ViewGroup {
         requestLayout();
     }
 
-    /**
-     * header/footer核心接口
-     */
-    public interface DragHander {
-        View getView(LayoutInflater inflater, ViewGroup viewGroup);
-
-        int getDragLimitHeight(View rootView);
-
-        int getDragMaxHeight(View rootView);
-
-        int getDragSpringHeight(View rootView);
-
-        /**
-         * 即将开始拖拽时的回调，可进行初始化操作
-         */
-        void onPreDrag(View rootView);
-
-        /**
-         * 手指拖动控件过程中的回调，用户可以根据拖动的距离添加拖动过程动画
-         *
-         * @param dy 拖动距离，下拉为+，上拉为-
-         */
-        void onDropAnim(View rootView, int dy);
-
-        /**
-         * 手指拖动控件过程中每次抵达临界点时的回调，用户可以根据手指方向设置临界动画
-         *
-         * @param upORdown 是上拉还是下拉 true(上)，false(下)
-         */
-        void onLimitDes(View rootView, boolean upORdown);
-
-        /**
-         * 拉动超过临界点后松开时回调
-         */
-        void onStartAnim();
-
-        /**
-         * 头(尾)已经全部弹回时回调
-         */
-        void onFinishAnim();
-
-        /**
-         * 收场动画执行时间
-         */
-        int getEndingAnimTime();
-
-        /**
-         * 收场动画回弹高度
-         */
-        int getEndingAnimHight(View rootView);
-
-        /**
-         * 收场动画开始执行
-         */
-        void onEndingAnimStart();
-
-        /**
-         * 收场动画结束执行
-         */
-        void onEndingAnimEnd();
-    }
 }

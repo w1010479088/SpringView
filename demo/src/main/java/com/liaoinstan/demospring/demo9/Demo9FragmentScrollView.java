@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.liaoinstan.demospring.R;
 import com.liaoinstan.springview.aliheader.AliFooter;
 import com.liaoinstan.springview.aliheader.AliHeader;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
 
 
@@ -58,14 +59,14 @@ public class Demo9FragmentScrollView extends Fragment {
         springView = rootView.findViewById(R.id.springview);
         springView.setHeader(new AliHeader(getContext(), R.drawable.ali, true));
         springView.setFooter(new AliFooter(getContext(), false));
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
         });

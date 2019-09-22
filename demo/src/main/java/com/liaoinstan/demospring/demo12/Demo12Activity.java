@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.liaoinstan.demospring.R;
 import com.liaoinstan.springview.aliheader.AliFooter;
 import com.liaoinstan.springview.wangyiheader.WangyiHeader;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
 
 public class Demo12Activity extends AppCompatActivity {
@@ -24,14 +25,14 @@ public class Demo12Activity extends AppCompatActivity {
 
         springView = findViewById(R.id.springview);
         springView.setMovePara(1.3);
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 2000);
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 2000);
             }
         });

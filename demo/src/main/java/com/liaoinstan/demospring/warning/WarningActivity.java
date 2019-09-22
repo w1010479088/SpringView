@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.liaoinstan.demospring.R;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
 
 public class WarningActivity extends AppCompatActivity {
@@ -20,14 +21,14 @@ public class WarningActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         springView = findViewById(R.id.springview);
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
         });

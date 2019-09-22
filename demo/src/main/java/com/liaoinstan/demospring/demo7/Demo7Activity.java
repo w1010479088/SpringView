@@ -9,7 +9,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.liaoinstan.demospring.R;
 import com.liaoinstan.springview.meituanheader.MeituanFooter;
 import com.liaoinstan.springview.meituanheader.MeituanHeader;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
+import com.liaoinstan.springview.widget.Type;
 
 public class Demo7Activity extends AppCompatActivity {
 
@@ -30,15 +32,15 @@ public class Demo7Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         springView = findViewById(R.id.springview);
-        springView.setType(SpringView.Type.FOLLOW);
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setType(Type.FOLLOW);
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 2000);
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 2000);
             }
         });

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.liaoinstan.demospring.R;
 import com.liaoinstan.springview.aliheader.AliFooter;
 import com.liaoinstan.springview.aliheader.AliHeader;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
 
 import java.util.ArrayList;
@@ -74,14 +75,14 @@ public class Demo9FragmentRecyclerView extends Fragment {
         springView = rootView.findViewById(R.id.springview);
         springView.setHeader(new AliHeader(getContext(), false));
         springView.setFooter(new AliFooter(getContext(), false));
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
                 new Handler().postDelayed(() -> {
                     mDatas.add("add item");
                     recyclerViewAdapter.notifyItemInserted(mDatas.size() - 1);

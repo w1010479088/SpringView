@@ -18,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.liaoinstan.demospring.R;
 import com.liaoinstan.springview.aliheader.AliFooter;
 import com.liaoinstan.springview.aliheader.AliHeader;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
+import com.liaoinstan.springview.widget.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,15 +48,15 @@ public class Demo3Activity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         springView = findViewById(R.id.springview);
-        springView.setType(SpringView.Type.FOLLOW);
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setType(Type.FOLLOW);
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
         });

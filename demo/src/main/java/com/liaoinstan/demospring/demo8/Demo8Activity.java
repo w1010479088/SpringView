@@ -17,7 +17,9 @@ import android.widget.TextView;
 import com.liaoinstan.demospring.R;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
+import com.liaoinstan.springview.widget.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,15 +38,15 @@ public class Demo8Activity extends AppCompatActivity {
         initData();
 
         springView = findViewById(R.id.springview);
-        springView.setType(SpringView.Type.FOLLOW);
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setType(Type.FOLLOW);
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
         });

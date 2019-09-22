@@ -10,7 +10,10 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.liaoinstan.demospring.R;
+import com.liaoinstan.springview.widget.Give;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
+import com.liaoinstan.springview.widget.Type;
 
 public class TestActivity extends Activity implements RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
     private SpringView springView;
@@ -27,7 +30,7 @@ public class TestActivity extends Activity implements RadioGroup.OnCheckedChange
 
 
         springView = findViewById(R.id.my);
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
                 Toast.makeText(TestActivity.this, "onRefresh", Toast.LENGTH_SHORT).show();
@@ -35,7 +38,7 @@ public class TestActivity extends Activity implements RadioGroup.OnCheckedChange
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
                 Toast.makeText(TestActivity.this, "onLoadmore", Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
@@ -46,25 +49,25 @@ public class TestActivity extends Activity implements RadioGroup.OnCheckedChange
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.overlap:
-                springView.setType(SpringView.Type.OVERLAP);
+                springView.setType(Type.OVERLAP);
                 break;
             case R.id.follow:
-                springView.setType(SpringView.Type.FOLLOW);
+                springView.setType(Type.FOLLOW);
                 break;
             case R.id.drag:
-                springView.setType(SpringView.Type.DRAG);
+                springView.setType(Type.DRAG);
                 break;
             case R.id.both:
-                springView.setGive(SpringView.Give.BOTH);
+                springView.setGive(Give.BOTH);
                 break;
             case R.id.top:
-                springView.setGive(SpringView.Give.TOP);
+                springView.setGive(Give.TOP);
                 break;
             case R.id.bottom:
-                springView.setGive(SpringView.Give.BOTTOM);
+                springView.setGive(Give.BOTTOM);
                 break;
             case R.id.none:
-                springView.setGive(SpringView.Give.NONE);
+                springView.setGive(Give.NONE);
                 break;
         }
     }

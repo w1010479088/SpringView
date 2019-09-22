@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.liaoinstan.demospring.R;
 import com.liaoinstan.springview.acfunheader.AcFunFooter;
 import com.liaoinstan.springview.acfunheader.AcFunHeader;
+import com.liaoinstan.springview.widget.Give;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
 
 public class Demo5Activity extends AppCompatActivity {
@@ -20,14 +22,14 @@ public class Demo5Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         springView = findViewById(R.id.springview);
-        springView.setGive(SpringView.Give.NONE);
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setGive(Give.NONE);
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
             }
         });
         springView.setHeader(new AcFunHeader(this, R.drawable.acfun_header));

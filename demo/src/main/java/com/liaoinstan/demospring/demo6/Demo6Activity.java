@@ -10,7 +10,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.liaoinstan.demospring.R;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
+import com.liaoinstan.springview.widget.Type;
 
 public class Demo6Activity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
 
@@ -27,7 +29,7 @@ public class Demo6Activity extends AppCompatActivity implements RadioGroup.OnChe
 
         springView = findViewById(R.id.springview);
         springView.setMovePara(1.5f);   //设置拖拽系数（值越大，移动越慢）
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
                 //如果当前设置的头部是QQHeader,则不finish
@@ -36,7 +38,7 @@ public class Demo6Activity extends AppCompatActivity implements RadioGroup.OnChe
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 1000);
             }
         });
@@ -48,11 +50,11 @@ public class Demo6Activity extends AppCompatActivity implements RadioGroup.OnChe
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.drag_header:
-                springView.setType(SpringView.Type.OVERLAP); //重叠模式
+                springView.setType(Type.OVERLAP); //重叠模式
                 springView.setHeader(new QQHeader());
                 break;
             case R.id.nomal_header:
-                springView.setType(SpringView.Type.FOLLOW);  //跟随模式
+                springView.setType(Type.FOLLOW);  //跟随模式
                 springView.setHeader(new DefaultHeader(this));
                 break;
         }

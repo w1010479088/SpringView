@@ -12,6 +12,7 @@ import com.liaoinstan.demospring.R;
 import com.liaoinstan.springview.aliheader.AliFooter;
 import com.liaoinstan.springview.weixinheader.Program;
 import com.liaoinstan.springview.weixinheader.WeixinHeader;
+import com.liaoinstan.springview.widget.OnFreshListener;
 import com.liaoinstan.springview.widget.SpringView;
 
 import java.util.ArrayList;
@@ -41,13 +42,13 @@ public class Demo11Activity extends AppCompatActivity implements WeixinHeader.On
 
         springView = findViewById(R.id.springview);
         springView.setMovePara(1.5);
-        springView.setListener(new SpringView.OnFreshListener() {
+        springView.setListener(new OnFreshListener() {
             @Override
             public void onRefresh() {
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore() {
                 new Handler().postDelayed(() -> springView.onFinishFreshAndLoad(), 2000);
             }
         });
